@@ -1,9 +1,12 @@
 package com.barosanu.controller;
 
 import com.barosanu.EmailManager;
+import com.barosanu.controller.services.LoginService;
+import com.barosanu.model.EmailAccount;
 import com.barosanu.view.ViewFactory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -28,9 +31,36 @@ public class LoginWindowController extends BaseController {
     void loginButtonAction(ActionEvent event) {
 
         System.out.println("loginButtonAction!");
-        viewFactory.showMainWindow();
-        Stage stage = (Stage) errorLabel.getScene().getWindow();
+        if(fieldsAreValid()) {
+            EmailAccount emailAccount = new EmailAccount(emailAddressField.getText(), passwordField.getText());
+            LoginService loginService = new LoginService(emailAccount, emailManager);
+            EmailLoginResult emailLoginResult = loginService.login();
 
-        viewFactory.closeStage(stage);
+            switch (emailLoginResult) {
+                case SUCCESS:
+                    System.out.println("login succesfuill!" + emailAccount);
+                    viewFactory.showMainWindow();
+                    Stage stage = (Stage) errorLabel.getScene().getWindow();
+                    viewFactory.closeStage(stage);
+                    break;
+            }
+        }
+
+
+
+    }
+
+    private boolean fieldsAreValid() {
+        if(emailAddressField.getText().isEmpty()) {
+            errorLabel.setText("Please fill email");
+            return false;
+        }
+
+        if(passwordField.getText().isEmpty()) {
+            errorLabel.setText("Please fill password");
+            return false;
+        }
+
+        return true;
     }
 }
