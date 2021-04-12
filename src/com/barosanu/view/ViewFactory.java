@@ -15,6 +15,10 @@ import java.util.ArrayList;
 
 public class ViewFactory {
 
+    //View options handling:
+    private ColorTheme colorTheme = ColorTheme.DEFAULT;
+    private FontSize fontSize = FontSize.MEDIUM;
+
     private EmailManager emailManager;
     private ArrayList<Stage> activeStages;
 
@@ -38,10 +42,6 @@ public class ViewFactory {
     public void setFontSize(FontSize fontSize) {
         this.fontSize = fontSize;
     }
-
-    //View options handling:
-    private ColorTheme colorTheme = ColorTheme.DEFAULT;
-    private FontSize fontSize = FontSize.MEDIUM;
 
     public void showLoginWindow() {
         System.out.println("Show login window called");
