@@ -33,4 +33,18 @@ public class LoginWindowController extends BaseController {
 
         viewFactory.closeStage(stage);
     }
+
+    private boolean fieldsAreValid() {
+        if(emailAddressField.getText().isEmpty()) {
+            errorLabel.setText("Please fill email");
+            return false;
+        }
+
+        if(passwordField.getText().isEmpty()) {
+            errorLabel.setText("Please fill password");
+            return false;
+        }
+
+        return true;
+    }
 }
