@@ -30,6 +30,7 @@ public class LoginWindowController extends BaseController {
     @FXML
     void loginButtonAction(ActionEvent event) {
 
+        System.out.println("loginButtonAction!");
         if(fieldsAreValid()) {
             EmailAccount emailAccount = new EmailAccount(emailAddressField.getText(), passwordField.getText());
             LoginService loginService = new LoginService(emailAccount, emailManager);
@@ -38,14 +39,15 @@ public class LoginWindowController extends BaseController {
             switch (emailLoginResult) {
                 case SUCCESS:
                     System.out.println("login succesfuill!" + emailAccount);
+                    viewFactory.showMainWindow();
+                    Stage stage = (Stage) errorLabel.getScene().getWindow();
+                    viewFactory.closeStage(stage);
+                    break;
             }
         }
 
-        System.out.println("loginButtonAction!");
-        viewFactory.showMainWindow();
-        Stage stage = (Stage) errorLabel.getScene().getWindow();
 
-        viewFactory.closeStage(stage);
+
     }
 
     private boolean fieldsAreValid() {
