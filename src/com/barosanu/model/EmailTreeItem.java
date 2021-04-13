@@ -37,8 +37,22 @@ public class EmailTreeItem<String> extends TreeItem<String> {
 
         emailMessages.add(emailMessage);
 
-    }
+        if(!messageIsRead) {
+            incrementMessagesCount();
+        }
     }
 
+    public void incrementMessagesCount() {
+        unreadMessagesCount++;
+        updateName();
+    }
+
+    private void updateName() {
+        if(unreadMessagesCount > 0) {
+            this.setValue((String)(name + " (" + unreadMessagesCount + ")"));
+        } else {
+            this.setValue(name);
+        }
+    }
 
 }
