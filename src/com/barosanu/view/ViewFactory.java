@@ -22,6 +22,8 @@ public class ViewFactory {
     private EmailManager emailManager;
     private ArrayList<Stage> activeStages;
 
+    private boolean mainViewInitialized = false;
+
     public ViewFactory(EmailManager emailManager) {
         this.emailManager = emailManager;
         activeStages = new ArrayList<>();
@@ -48,6 +50,7 @@ public class ViewFactory {
 
         BaseController controller = new LoginWindowController(emailManager, this, "LoginWindow.fxml");
         initializeStage(controller);
+        mainViewInitialized = true;
     }
 
     public void showOptionsWindow() {
@@ -96,5 +99,9 @@ public class ViewFactory {
             scene.getStylesheets().add(getClass().getResource(ColorTheme.getCssPath(colorTheme)).toExternalForm());
             scene.getStylesheets().add(getClass().getResource(FontSize.getCssPath(fontSize)).toExternalForm());
         }
+    }
+
+    public boolean isMainViewInitialized() {
+        return mainViewInitialized;
     }
 }
