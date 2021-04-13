@@ -12,6 +12,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class LoginWindowController extends BaseController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
 
     @FXML
     private TextField emailAddressField;
@@ -44,7 +47,18 @@ public class LoginWindowController extends BaseController {
                         viewFactory.showMainWindow();
                         Stage stage = (Stage) errorLabel.getScene().getWindow();
                         viewFactory.closeStage(stage);
-                        break;
+                        return;
+
+                    case FAILED_BY_CREDENTIALS:
+                        errorLabel.setText("invalid credentials!");
+                        return;
+
+                    case FAILED_BY_UNEXPECTED_ERROR:
+                        errorLabel.setText("unexpected error!");
+                        return;
+
+                    default:
+                        return;
                 }
             });
 
