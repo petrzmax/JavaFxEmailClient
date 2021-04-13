@@ -38,6 +38,7 @@ public class EmailMessage {
     public String getRecipient() {
         return recipient.getName();
     }
+
     public Integer getSize() {
         return size.get();
     }
