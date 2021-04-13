@@ -5,16 +5,17 @@ import com.barosanu.controller.services.LoginService;
 import com.barosanu.model.EmailAccount;
 import com.barosanu.view.ViewFactory;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class LoginWindowController extends BaseController {
 import java.net.URL;
 import java.util.ResourceBundle;
 
+public class LoginWindowController extends BaseController implements Initializable {
 
     @FXML
     private TextField emailAddressField;
@@ -78,5 +79,11 @@ import java.util.ResourceBundle;
         }
 
         return true;
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        emailAddressField.setText("YOUR_EMAIL_HERE");
+        passwordField.setText("YOUR_PASSWORD_HERE");
     }
 }
