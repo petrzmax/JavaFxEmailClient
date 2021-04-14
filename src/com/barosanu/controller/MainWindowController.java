@@ -76,8 +76,15 @@ public class MainWindowController extends BaseController implements Initializabl
         emailsTableView.setOnMouseClicked(event -> {
            EmailMessage emailMessage = emailsTableView.getSelectionModel().getSelectedItem();
            if(emailMessage != null) {
+               emailManager.setSelectedMessage(emailMessage);
                messageRendererService.setEmailMessage(emailMessage);
                messageRendererService.restart();
+
+               emailManager.setSelectedMessage(emailMessage);
+
+               if(!emailMessage.isRead()) {
+                   emailManager.setRead();
+               }
            }
         });
     }
@@ -100,6 +107,7 @@ public class MainWindowController extends BaseController implements Initializabl
             EmailTreeItem<String> item = (EmailTreeItem<String>) emailsTreeView.getSelectionModel().getSelectedItem();
             if(item != null) {
                 emailsTableView.setItems(item.getEmailMessages());
+                emailManager.setSelectedFolder(item);
             }
         });
     }
