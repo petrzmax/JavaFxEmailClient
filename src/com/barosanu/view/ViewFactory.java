@@ -50,7 +50,6 @@ public class ViewFactory {
 
         BaseController controller = new LoginWindowController(emailManager, this, "LoginWindow.fxml");
         initializeStage(controller);
-        mainViewInitialized = true;
     }
 
     public void showOptionsWindow() {
@@ -65,6 +64,7 @@ public class ViewFactory {
 
         BaseController controller = new MainWindowController(emailManager, this, "MainWindow.fxml");
         initializeStage(controller);
+        mainViewInitialized = true;
     }
 
     private void initializeStage(BaseController baseController) {
