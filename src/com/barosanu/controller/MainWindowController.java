@@ -47,7 +47,7 @@ public class MainWindowController extends BaseController implements Initializabl
     private WebView emailWebView;
 
     @FXML
-    void AddAccountAction() {
+    void addAccountAction() {
         viewFactory.showLoginWindow();
     }
 
