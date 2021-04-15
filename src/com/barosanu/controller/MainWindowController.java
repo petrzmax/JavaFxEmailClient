@@ -56,6 +56,11 @@ public class MainWindowController extends BaseController implements Initializabl
         viewFactory.showOptionsWindow();
     }
 
+    @FXML
+    void composeMessageAction() {
+        viewFactory.showComposeMessageWindow();
+    }
+
     private MessageRendererService messageRendererService;
 
     public MainWindowController(EmailManager emailManager, ViewFactory viewFactory, String fxmlName) {
