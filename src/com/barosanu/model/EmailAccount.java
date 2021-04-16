@@ -1,5 +1,6 @@
 package com.barosanu.model;
 
+import javax.mail.Session;
 import javax.mail.Store;
 import java.util.Properties;
 
@@ -9,6 +10,8 @@ public class EmailAccount {
     private String password;
     private Properties properties;
     private Store store;
+
+    private Session session;
 
     public EmailAccount(String address, String password) {
         this.address = address;
@@ -45,5 +48,18 @@ public class EmailAccount {
 
     public void setStore(Store store) {
         this.store = store;
+    }
+
+    @Override
+    public String toString() {
+        return address;
+    }
+
+    public Session getSession() {
+        return session;
+    }
+
+    public void setSession(Session session) {
+        this.session = session;
     }
 }
