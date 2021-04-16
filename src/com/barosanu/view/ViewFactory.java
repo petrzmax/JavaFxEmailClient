@@ -67,7 +67,7 @@ public class ViewFactory {
     public void showComposeMessageWindow() {
         System.out.println("Show composer message window called");
 
-        BaseController controller = new OptionsWindowController(emailManager, this, "ComposeMessageWindow.fxml");
+        BaseController controller = new ComposeMessageController(emailManager, this, "ComposeMessageWindow.fxml");
         initializeStage(controller);
     }
 
