@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LoginWindowController extends BaseController implements Initializable {
+public class LoginWindowController extends BaseController{
 
     @FXML
     private TextField emailAddressField;
@@ -82,11 +82,5 @@ public class LoginWindowController extends BaseController implements Initializab
         }
 
         return true;
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        emailAddressField.setText("YOUR_EMAIL_HERE");
-        passwordField.setText("YOUR_PASSWORD_HERE");
     }
 }
