@@ -62,15 +62,24 @@ public class MessageRendererService extends Service {
             stringBuffer.append(message.getContent().toString());
         } else if (isMultipartType(contentType)) {
             Multipart multipart = (Multipart) message.getContent();
-            for ( int i = multipart.getCount() - 1; i >= 0; i--) {
-                BodyPart bodyPart = multipart.getBodyPart(i);
-                String bodyPartContent = bodyPart.getContentType();
+            loadMultipart(multipart, stringBuffer);
+        }
+    }
 
-                if(isSimpleType(bodyPartContent)) {
-                    stringBuffer.append(bodyPart.getContent().toString());
-                }
+    private void loadMultipart (Multipart multipart, StringBuffer stringBuffer) throws MessagingException, IOException {
+        for ( int i = multipart.getCount() - 1; i >= 0; i--) {
+            BodyPart bodyPart = multipart.getBodyPart(i);
+            String bodyPartContent = bodyPart.getContentType();
+
+            if(isSimpleType(bodyPartContent)) {
+                stringBuffer.append(bodyPart.getContent().toString());
+            } else if(isMultipartType(bodyPartContent)) {
+                Multipart multipart2 = (Multipart) bodyPart.getContent();
+                loadMultipart(multipart2, stringBuffer);
             }
         }
+
+
     }
 
     private boolean isSimpleType(String contentType) {
