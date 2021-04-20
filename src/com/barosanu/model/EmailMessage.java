@@ -67,11 +67,13 @@ public class EmailMessage {
 
     public void addAttachment(MimeBodyPart mbp) {
         hasAttachments = true;
-        attachmentList.add(mbp);
-        try {
-            System.out.println("Added attach: " + mbp.getFileName());
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(!attachmentList.contains(mbp)){
+            attachmentList.add(mbp);
+            try {
+                System.out.println("Added attach: " + mbp.getFileName());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
