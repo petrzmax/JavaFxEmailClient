@@ -7,8 +7,8 @@ module FirstJavaFX {
     requires java.mail;
     requires java.desktop;
 
-    opens com.barosanu.view;
-    opens com.barosanu.controller;
-    opens com.barosanu.model;
-    opens com.barosanu to javafx.graphics;
+    opens com.petrzmax.view;
+    opens com.petrzmax.controller;
+    opens com.petrzmax.model;
+    opens com.petrzmax to javafx.graphics;
 }
