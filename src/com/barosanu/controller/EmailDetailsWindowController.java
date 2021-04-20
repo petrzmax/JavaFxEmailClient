@@ -4,6 +4,8 @@ import com.barosanu.EmailManager;
 import com.barosanu.controller.services.MessageRendererService;
 import com.barosanu.model.EmailMessage;
 import com.barosanu.view.ViewFactory;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -13,6 +15,8 @@ import javafx.scene.web.WebView;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeBodyPart;
+import java.awt.*;
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -53,17 +57,72 @@ public class EmailDetailsWindowController extends BaseController implements Init
     }
 
     private void loadAttachments(EmailMessage emailMessage){
-        if(emailMessage.getHasAttachments()) {
+        if(emailMessage.hasAttachments()) {
             for (MimeBodyPart mimeBodyPart: emailMessage.getAttachmentList()) {
                 try {
-                    Button button = new Button(mimeBodyPart.getFileName());
+                    AttachmentButton button = new AttachmentButton(mimeBodyPart);
                     hBoxDownloads.getChildren().add(button);
                 } catch (MessagingException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         } else {
             attachmentsLabel.setText("");
+        }
+    }
+
+    private class AttachmentButton extends Button {
+
+        private MimeBodyPart mimeBodyPart;
+        private String downloadedFilePath;
+
+        AttachmentButton(MimeBodyPart mimeBodyPart) throws MessagingException {
+            this.mimeBodyPart = mimeBodyPart;
+            this.setText(mimeBodyPart.getFileName());
+            this.downloadedFilePath = LOCATION_OF_DOWNLOADS + mimeBodyPart.getFileName();
+
+            this.setOnAction(event -> downloadAttachment());
+        }
+
+        private void downloadAttachment() {
+            colorBlue();
+            Service service = new Service() {
+                @Override
+                protected Task createTask() {
+                    return new Task() {
+                        @Override
+                        protected Object call() throws Exception {
+                            mimeBodyPart.saveFile(downloadedFilePath);
+                            return null;
+                        }
+                    };
+                }
+            };
+            service.restart();
+            service.setOnSucceeded(event -> {
+                colorGreen();
+                this.setOnAction(e2 -> {
+                    File file = new File(downloadedFilePath);
+                    Desktop desktop = Desktop.getDesktop();
+                    if(file.exists()) {
+                        try {
+                            desktop.open(file);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            });
+        }
+
+        private void colorBlue() {
+            this.setStyle("-fx-background-color: Blue");
+        }
+
+        private void colorGreen() {
+            this.setStyle("-fx-background-color: Green");
         }
     }
 }

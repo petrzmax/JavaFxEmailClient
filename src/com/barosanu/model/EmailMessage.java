@@ -75,7 +75,7 @@ public class EmailMessage {
         }
     }
 
-    public boolean getHasAttachments() {
+    public boolean hasAttachments() {
         return hasAttachments;
     }
 
